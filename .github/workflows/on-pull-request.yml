@@ -15,5 +15,5 @@ jobs:
   starter-ecs-pull-request:
     uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-pull-request.yml@feature/refactor
     with:
-      lifecycle: 'dev'
+      environment: 'dev'
     secrets: inherit
