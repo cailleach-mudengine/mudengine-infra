@@ -1,0 +1,17 @@
+name: 'OnPushMain'
+
+on:  
+  push:
+    branches:
+      - 'main'
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  starter-ecs-dev-publish:
+    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-publish.yml@main
+    with:
+      environment: "dev"
+    secrets: inherit
