@@ -1,0 +1,64 @@
+name: 'Terraform Local Apply'
+description: "Performs a Terraform Apply"
+inputs:
+  initiative:
+    required: true
+  environment:
+    required: true
+  service-name:
+    required: false
+  revision:
+    required: false
+  is-infra-script:
+    type: boolean
+    required: true  
+  git-organization:
+    required: true
+  aws-bucket-prefix:
+    required: true    
+  aws-region:
+    required: true
+    description: Region where to run Terraform script
+  shared-app-id:
+    required: true
+  shared-token:
+    required: true
+  aws-github-role:
+    required: true
+    description: Role to be used to run Terraform script
+  aws-main-role:
+    required: true
+    description: Role to be used to run Terraform script
+  aws-core-role:
+    required: true
+    description: Additional role to access AWS Core Account
+  message:
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+      
+    - name: Prepare Environment
+      uses: cailleach-devops/aws-shared-actions/.github/actions/tf/tf-prepare@main
+      with:
+        initiative: ${{ inputs.initiative }}
+        environment: ${{ env.environment }}
+        service-name: ${{ inputs.service-name }}
+        revision: ${{ env.revision }}
+        git-organization: ${{ inputs.git-organization }}
+        is-infra-script: ${{ inputs.is-infra-script }}        
+        aws-bucket-prefix: ${{ inputs.aws-bucket-prefix }}
+        aws-region: ${{ inputs.aws-region }}
+        shared-app-id: ${{ inputs.fs-shared-app-id }}
+        shared-token: ${{ inputs.fs-shared-token }}
+        aws-github-role: ${{ inputs.aws-github-role }}
+        aws-main-role: ${{ inputs.aws-main-role }}
+        aws-core-role: ${{ inputs.aws-core-role }}
+
+    - name: Terraform Apply
+      working-directory: ./terraform
+      shell: bash
+      run: terraform apply -no-color -input=false -auto-approve

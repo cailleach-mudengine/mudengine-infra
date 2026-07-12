@@ -1,0 +1,44 @@
+name: 'AwsPullRequest'
+
+on:  
+  workflow_call:
+    inputs:
+      environment:
+        type: string      
+        required: true
+        
+env:
+  aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
+  aws-admin-role: ${{ secrets[format('{0}_AWS_ADMIN_ROLE', inputs.environment)] }}
+  aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', inputs.environment)] }}
+  aws-main-role: ${{ secrets[format('{0}_AWS_MAIN_ROLE', inputs.environment)] }}
+  aws-region: ${{ vars[format('{0}_AWS_REGION', inputs.environment)] }}
+  initiative: ${{ vars.INITIATIVE }}
+  shared-app-id: ${{ secrets.SHARED_APP_ID }}
+  shared-secret: ${{ secrets.SHARED_SECRET }}
+
+jobs:
+
+  terraform-plan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - id: checkout
+      name: checkout
+      uses: actions/checkout@v4
+      
+    - id: plan
+      name: Terraform Plan
+      uses: cailleach-mudengine/mudengine-infra/.github/actions/tf/tf-plan@feature/refactor
+      with:
+        aws-bucket-prefix: ${{ env.aws-bucket-prefix }}
+        aws-admin-role: ${{ env.aws-admin-role }}
+        aws-github-role: ${{ env.aws-github-role }}
+        aws-main-role: ${{ env.aws-main-role }}
+        aws-region: ${{ env.aws-region }}
+        shared-app-id: ${{ env.shared-app-id }}
+        shared-secret: ${{ env.shared-secret }}
+        is-infra-script: true
+        initiative: ${{ env.initiative }}        
+        environment: ${{ inputs.environment }}
+        

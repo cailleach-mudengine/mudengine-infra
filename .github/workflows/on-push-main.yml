@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   starter-ecs-dev-publish:
-    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-publish.yml@main
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-publish.yml@feature/refactor
     with:
       environment: "dev"
     secrets: inherit

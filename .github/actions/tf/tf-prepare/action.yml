@@ -1,0 +1,107 @@
+name: 'Terraform Local Prepare'
+description: "Prepare a Terraform Local Execution"
+inputs:
+  initiative:
+    required: true
+  environment:
+    required: true
+  service-name:
+    required: false
+  revision:
+    required: false
+  is-infra-script:
+    type: boolean
+    required: true
+  git-organization:
+    required: true
+  aws-bucket-prefix:
+    required: true
+  aws-region:
+    required: true
+  shared-app-id:
+    required: true
+  shared-token:
+    required: true
+  aws-github-role:
+    required: true
+  aws-main-role:
+    required: true
+    description: Role to be used to run Terraform script
+  aws-core-role:
+    required: true
+    description: Additional role to access AWS Core Account
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v7
+    
+    - name: configure aws credentials
+      uses: aws-actions/configure-aws-credentials@v6.2.2
+      with:
+        role-to-assume: ${{ inputs.aws-github-role }}
+        aws-region: ${{ inputs.aws-region }}
+      
+    - name: Setup Terraform with specified version on the runner
+      uses: hashicorp/setup-terraform@v4
+      with:
+        terraform_version: 1.15.8
+        
+    - name: Install Jinja2
+      shell: bash
+      run: pip install jinja2-cli
+
+    - id: app-state-key
+      if: inputs.is-infra-script == false
+      shell: bash
+      run: |
+         echo "state_key=app/${{ inputs.service-name }}/terraform.tfstate" >> "$GITHUB_ENV"
+
+    - id: infra-state-key
+      if: inputs.is-infra-script == true
+      shell: bash
+      run: |
+         echo "state_key=infra/terraform.tfstate" >> "$GITHUB_ENV"
+        
+    - name: Create providers file
+      shell: bash
+      working-directory: ./terraform
+      env:
+        AWS_REGION: ${{ inputs.aws-region }}
+        AWS_MAIN_ROLE: ${{ inputs.aws-main-role }}
+        AWS_CORE_ROLE: ${{ inputs.aws-core-role }}
+        STATE_BUCKET: "${{ inputs.aws-bucket-prefix}}-${{ inputs.initiative }}-${{ inputs.environment }}-terraform-state"
+        STATE_KEY: ${{ env.state_key}}
+      run: | 
+        jinja2 providers.jinja --strict \
+          -D region="$AWS_REGION" \
+          -D main_role="$AWS_MAIN_ROLE" \
+          -D core_role="$AWS_CORE_ROLE" \
+          -D state_bucket="$STATE_BUCKET" \
+          -D state_key="$STATE_KEY" \
+        > providers.tf
+
+      
+    - name: Generate TFvar
+      shell: bash
+      working-directory: ./terraform
+      run: | 
+        cat << 'EOF' > .auto.tfvars
+          initiative="${{ inputs.initiative }}"
+          environment="${{ inputs.environment }}"
+          bucket-prefix="${{ inputs.aws-bucket-prefix}}"
+          git-organization="${{ inputs.git-organization }}"
+          service-name="${{ inputs.service-name}}"
+          revision="${{ inputs.revision }}"
+        EOF
+   
+    - name: Terraform init
+      id: init
+      shell: bash
+      working-directory: ./terraform
+      run: | 
+        git config --global url."https://${{ inputs.shared-app-id }}:${{ inputs.shared-token }}@github.com".insteadOf "https://github.com"
+        git config --global advice.detachedHead false
+        
+        terraform init

@@ -1,0 +1,71 @@
+name: 'AwsPublish'
+
+on:  
+  workflow_call:
+    inputs:
+      lifecycle:
+        type: string
+        required: true                
+
+env:
+  aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
+  aws-core-role: ${{ secrets[format('CORE_{0}_AWS_ROLE', inputs.lifecycle)] }}
+  aws-github-role: ${{ secrets[format('{0}_GITHUB_ROLE', inputs.lifecycle)] }}
+  aws-main-role: ${{ secrets[format('{0}_AWS_ROLE', inputs.lifecycle)] }}
+  aws-region: ${{ vars[format('{0}_AWS_REGION', inputs.lifecycle)] }}
+  business-unit-name: ${{ vars.BUSINESS_UNIT }}
+  cf-account: ${{ vars[format('{0}_CF_ACCOUNT', inputs.lifecycle)] }}
+  cf-domain: ${{ vars[format('{0}_CF_DOMAIN', inputs.lifecycle)] }}
+  cf-token: ${{ secrets[format('{0}_CF_TOKEN', inputs.lifecycle)] }}
+  deployment_key: ${{ vars.DEPLOYMENT_KEY }}
+  fs-shared-app-id: ${{ secrets.FS_SHARED_APP_ID }}
+  fs-shared-secret: ${{ secrets.FS_SHARED_SECRET }}
+  lifecycle-tier: ${{ vars[format('{0}_TIER', inputs.lifecycle)] }}
+  platform: ${{ vars.PLATFORM }}
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  
+  check-config:
+    runs-on: ubuntu-latest
+    steps:
+    - id: checkConfig
+      name: Check Configuration
+      uses: fullsteam-corp-shared/hosted-aws-shared-actions/.github/actions/aws/check-config@master
+      with:
+        platform: ${{ env.platform }}
+        deployment_key: ${{ env.deployment_key }}      
+  
+
+  terraform-apply:
+    runs-on: ubuntu-latest
+    needs: [ check-config ]
+
+    steps:
+    - id: checkout
+      name: checkout
+      uses: actions/checkout@v4
+      
+    - name: "Terraform Apply"
+      uses: fullsteam-corp-shared/hosted-aws-shared-actions/.github/actions/tf/tf-apply@master
+      with:
+        aws-bucket-prefix: ${{ env.aws-bucket-prefix }}
+        aws-core-role: ${{ env.aws-core-role }}       
+        aws-github-role: ${{ env.aws-github-role }}
+        aws-main-role: ${{ env.aws-main-role }}
+        aws-region: ${{ env.aws-region }}
+        business-unit-name: ${{ env.business-unit-name }}
+        cf-account: ${{ env.cf-account }}
+        cf-domain: ${{ env.cf-domain }}
+        cf-token: ${{ env.cf-token }}
+        deployment_key: ${{ env.deployment_key }}
+        fs-shared-app-id: ${{ env.fs-shared-app-id }}
+        fs-shared-secret: ${{ env.fs-shared-secret }}
+        is-infra-script: true
+        lifecycle-tier: ${{ env.lifecycle-tier }}
+        lifecycle: ${{ inputs.lifecycle }}
+        message: "GitHub Push in Main Branch"
+        platform: ${{ env.platform }}
