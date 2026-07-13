@@ -43,9 +43,9 @@ runs:
       uses: cailleach-mudengine/mudengine-infra/.github/actions/tf/tf-prepare@feature/refactor
       with:
         initiative: ${{ inputs.initiative }}
-        environment: ${{ env.environment }}
+        environment: ${{ inputs.environment }}
         service-name: ${{ inputs.service-name }}
-        revision: ${{ env.revision }}
+        revision: ${{ inputs.revision }}
         git-organization: ${{ inputs.git-organization }}
         is-infra-script: ${{ inputs.is-infra-script }}        
         aws-bucket-prefix: ${{ inputs.aws-bucket-prefix }}
