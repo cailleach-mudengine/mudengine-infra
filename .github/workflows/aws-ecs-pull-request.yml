@@ -29,7 +29,7 @@ jobs:
       
     - id: plan
       name: Terraform Plan
-      uses: cailleach-mudengine/mudengine-infra/.github/actions/tf/tf-plan@feature/refactor
+      uses: cailleach-mudengine/mudengine-infra/.github/actions/tf/tf-plan@main
       with:
         aws-bucket-prefix: ${{ env.aws-bucket-prefix }}
         aws-admin-role: ${{ env.aws-admin-role }}
