@@ -14,7 +14,7 @@ terraform {
     region         = "{{ region }}"
 	  use_lockfile   = true
 	  assume_role = {
-      role_arn = "{{ core_role }}"
+      role_arn = "{{ admin_role }}"
     }
   }
 }
@@ -28,10 +28,10 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "core"
+  alias = "admin"
   region = "{{ region }}"
  
   assume_role {
-    role_arn = "{{ core_role }}"
+    role_arn = "{{ admin_role }}"
   } 
 }

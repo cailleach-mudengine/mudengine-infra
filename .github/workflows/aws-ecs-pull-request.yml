@@ -11,7 +11,7 @@ env:
   aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
   aws-admin-role: ${{ secrets[format('{0}_AWS_ADMIN_ROLE', inputs.environment)] }}
   aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', inputs.environment)] }}
-  aws-main-role: ${{ secrets[format('{0}_AWS_MAIN_ROLE', inputs.environment)] }}
+  aws-main-role: ${{ secrets[format('{0}_AWS_MASTER_ROLE', inputs.environment)] }}
   aws-region: ${{ vars[format('{0}_AWS_REGION', inputs.environment)] }}
   initiative: ${{ vars.INITIATIVE }}
   shared-app-id: ${{ secrets.SHARED_APP_ID }}
@@ -25,7 +25,7 @@ jobs:
     steps:
     - id: checkout
       name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       
     - id: plan
       name: Terraform Plan

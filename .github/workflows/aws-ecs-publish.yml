@@ -47,7 +47,7 @@ jobs:
     steps:
     - id: checkout
       name: checkout
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       
     - name: "Terraform Apply"
       uses: fullsteam-corp-shared/hosted-aws-shared-actions/.github/actions/tf/tf-apply@master

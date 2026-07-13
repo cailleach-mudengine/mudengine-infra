@@ -20,14 +20,14 @@ inputs:
     required: true
   shared-app-id:
     required: true
-  shared-token:
+  shared-secret:
     required: true
   aws-github-role:
     required: true
   aws-main-role:
     required: true
     description: Role to be used to run Terraform script
-  aws-core-role:
+  aws-admin-role:
     required: true
     description: Additional role to access AWS Core Account
 
@@ -70,14 +70,14 @@ runs:
       env:
         AWS_REGION: ${{ inputs.aws-region }}
         AWS_MAIN_ROLE: ${{ inputs.aws-main-role }}
-        AWS_CORE_ROLE: ${{ inputs.aws-core-role }}
+        AWS_ADMIN_ROLE: ${{ inputs.aws-admin-role }}
         STATE_BUCKET: "${{ inputs.aws-bucket-prefix}}-${{ inputs.initiative }}-${{ inputs.environment }}-terraform-state"
         STATE_KEY: ${{ env.state_key}}
       run: | 
         jinja2 providers.jinja --strict \
           -D region="$AWS_REGION" \
           -D main_role="$AWS_MAIN_ROLE" \
-          -D core_role="$AWS_CORE_ROLE" \
+          -D admin_role="$AWS_ADMIN_ROLE" \
           -D state_bucket="$STATE_BUCKET" \
           -D state_key="$STATE_KEY" \
         > providers.tf
@@ -101,7 +101,7 @@ runs:
       shell: bash
       working-directory: ./terraform
       run: | 
-        git config --global url."https://${{ inputs.shared-app-id }}:${{ inputs.shared-token }}@github.com".insteadOf "https://github.com"
+        git config --global url."https://${{ inputs.shared-app-id }}:${{ inputs.shared-secret }}@github.com".insteadOf "https://github.com"
         git config --global advice.detachedHead false
         
         terraform init
