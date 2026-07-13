@@ -53,13 +53,13 @@ runs:
       run: pip install jinja2-cli
 
     - id: app-state-key
-      if: inputs.is-infra-script == false
+      if: inputs.is-infra-script == 'false'
       shell: bash
       run: |
          echo "state_key=app/${{ inputs.service-name }}/terraform.tfstate" >> "$GITHUB_ENV"
 
     - id: infra-state-key
-      if: inputs.is-infra-script == true
+      if: inputs.is-infra-script == 'true'
       shell: bash
       run: |
          echo "state_key=infra/terraform.tfstate" >> "$GITHUB_ENV"
