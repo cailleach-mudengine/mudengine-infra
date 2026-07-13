@@ -82,6 +82,8 @@ runs:
           -D state_key="$STATE_KEY" \
         > providers.tf
 
+        cat providers.tf
+
       
     - name: Generate TFvar
       shell: bash
@@ -95,13 +97,24 @@ runs:
           service-name="${{ inputs.service-name}}"
           revision="${{ inputs.revision }}"
         EOF
+
+    - name: Generate app token for cross-org access
+      uses: actions/create-github-app-token@v3.2.0
+      id: app-token
+      with:
+        app-id: ${{ inputs.shared-app-id }}
+        private-key: ${{ inputs.shared-secret }}
+        owner: cailleach-devops
+
+    - name: Authenticate to devops git org
+      shell: bash
+      run: |
+        echo ${{ steps.app-token.outputs.token }} | gh auth login --with-token
+        gh auth setup-git
+
    
     - name: Terraform init
       id: init
       shell: bash
       working-directory: ./terraform
-      run: | 
-        git config --global url."https://${{ inputs.shared-app-id }}:${{ inputs.shared-secret }}@github.com".insteadOf "https://github.com"
-        git config --global advice.detachedHead false
-        
-        terraform init
+      run: terraform init
