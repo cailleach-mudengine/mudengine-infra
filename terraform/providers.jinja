@@ -1,12 +1,13 @@
 terraform {
 
-  required_version = "~>1.5"
+  required_version = "~>1.15"
 
   required_providers {
     aws = {
       source   = "hashicorp/aws"
-      version = ">= 6.0"
+      version = ">= 6.13"
     }
+  }
   
   backend "s3" {
     bucket         = "{{ state_bucket }}"
@@ -14,7 +15,7 @@ terraform {
     region         = "{{ region }}"
 	  use_lockfile   = true
 	  assume_role = {
-      role_arn = "{{ core_role }}"
+      role_arn = "{{ admin_role }}"
     }
   }
 }
@@ -28,10 +29,10 @@ provider "aws" {
 }
 
 provider "aws" {
-  alias = "core"
+  alias = "admin"
   region = "{{ region }}"
  
   assume_role {
-    role_arn = "{{ core_role }}"
+    role_arn = "{{ admin_role }}"
   } 
 }
