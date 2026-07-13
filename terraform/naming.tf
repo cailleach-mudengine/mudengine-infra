@@ -6,7 +6,7 @@ data "aws_region" "admin" {
 }
 
 module "naming" {
-  source = "github.com/cailleach-devops/terraform-aws-naming-common.git?ref=feature/refactor"
+  source = "github.com/cailleach-devops/terraform-aws-common.git?ref=feature/refactor"
   
   git_organization = var.git_organization
   initiative = var.initiative
