@@ -2,7 +2,7 @@ data "aws_region" "main" {
 }
 
 data "aws_region" "admin" {
-  provider = aws.core
+  provider = aws.admin
 }
 
 module "naming" {
