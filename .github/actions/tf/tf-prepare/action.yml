@@ -18,7 +18,7 @@ inputs:
     required: true
   aws-region:
     required: true
-  shared-app-id:
+  shared-client-id:
     required: true
   shared-secret:
     required: true
@@ -81,9 +81,6 @@ runs:
           -D state_bucket="$STATE_BUCKET" \
           -D state_key="$STATE_KEY" \
         > providers.tf
-
-        cat providers.tf
-
       
     - name: Generate TFvar
       shell: bash
@@ -102,7 +99,7 @@ runs:
       uses: actions/create-github-app-token@v3.2.0
       id: app-token
       with:
-        app-id: ${{ inputs.shared-app-id }}
+        client-id: ${{ inputs.shared-client-id }}
         private-key: ${{ inputs.shared-secret }}
         owner: cailleach-devops
 

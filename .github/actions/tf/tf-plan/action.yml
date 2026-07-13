@@ -19,7 +19,7 @@ inputs:
   aws-region:
     required: true
     description: Region where to run Terraform script
-  shared-app-id:
+  shared-client-id:
     required: true
   shared-secret:
     required: true
@@ -50,8 +50,8 @@ runs:
         is-infra-script: ${{ inputs.is-infra-script }}        
         aws-bucket-prefix: ${{ inputs.aws-bucket-prefix }}
         aws-region: ${{ inputs.aws-region }}
-        shared-app-id: ${{ inputs.fs-shared-app-id }}
-        shared-secret: ${{ inputs.fs-shared-secret }}
+        shared-client-id: ${{ inputs.shared-client-id }}
+        shared-secret: ${{ inputs.shared-secret }}
         aws-github-role: ${{ inputs.aws-github-role }}
         aws-main-role: ${{ inputs.aws-main-role }}
         aws-admin-role: ${{ inputs.aws-admin-role }}
