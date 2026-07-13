@@ -40,7 +40,7 @@ runs:
       uses: actions/checkout@v7
       
     - name: Prepare Environment
-      uses: cailleach-devops/aws-shared-actions/.github/actions/tf/tf-prepare@main
+      uses: cailleach-mudengine/mudengine-infra/.github/actions/tf/tf-prepare@main
       with:
         initiative: ${{ inputs.initiative }}
         environment: ${{ inputs.environment }}

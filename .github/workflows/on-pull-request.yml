@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   starter-ecs-pull-request:
-    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-pull-request.yml@feature/refactor
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-pull-request.yml@main
     with:
       environment: 'dev'
     secrets: inherit

@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   starter-ecs-dev-publish:
-    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-destroy.yml@feature/refactor
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-destroy.yml@main
     with:
       environment: "dev"
     secrets: inherit

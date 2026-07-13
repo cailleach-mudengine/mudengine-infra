@@ -32,7 +32,7 @@ jobs:
       uses: actions/checkout@v7
       
     - name: "Terraform Destroy"
-      uses: cailleach-mudengine/mudengine-infra/.github/actions/tf/tf-destroy@feature/refactor
+      uses: cailleach-mudengine/mudengine-infra/.github/actions/tf/tf-destroy@main
       with:
         aws-bucket-prefix: ${{ env.aws-bucket-prefix }}
         aws-admin-role: ${{ env.aws-admin-role }}
