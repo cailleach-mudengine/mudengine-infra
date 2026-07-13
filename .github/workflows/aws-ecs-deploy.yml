@@ -1,6 +1,11 @@
 name: 'AwsPublish'
 
 on:  
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: string
+        required: true  
   workflow_call:
     inputs:
       environment:
