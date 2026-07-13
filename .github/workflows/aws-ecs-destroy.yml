@@ -5,7 +5,7 @@ on:
     inputs:
       environment:
         type: string
-        required: true                
+        required: true
 
 env:
   aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
