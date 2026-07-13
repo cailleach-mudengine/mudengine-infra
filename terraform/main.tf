@@ -1,5 +1,5 @@
 module "aws-networking" {
-  source  = "github.com/cailleach-devops/terraform-aws-networking.git"
+  source  = "github.com/cailleach-devops/terraform-aws-networking.git?ref=feature/refactor"
 
   initiative = var.initiative
   environment = var.environment
