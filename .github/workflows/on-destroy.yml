@@ -1,0 +1,15 @@
+name: 'OnDestroy'
+
+on:  
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  starter-ecs-dev-publish:
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-publish.yml@feature/refactor
+    with:
+      environment: "dev"
+    secrets: inherit

@@ -19,9 +19,9 @@ inputs:
   aws-region:
     required: true
     description: Region where to run Terraform script
-  shared-app-id:
+  shared-client-id:
     required: true
-  shared-token:
+  shared-secret:
     required: true
   aws-github-role:
     required: true
@@ -29,7 +29,7 @@ inputs:
   aws-main-role:
     required: true
     description: Role to be used to run Terraform script
-  aws-core-role:
+  aws-admin-role:
     required: true
     description: Additional role to access AWS Core Account
 
@@ -43,18 +43,18 @@ runs:
       uses: cailleach-devops/aws-shared-actions/.github/actions/tf/tf-prepare@main
       with:
         initiative: ${{ inputs.initiative }}
-        environment: ${{ env.environment }}
+        environment: ${{ inputs.environment }}
         service-name: ${{ inputs.service-name }}
-        revision: ${{ env.revision }}
+        revision: ${{ inputs.revision }}
         git-organization: ${{ inputs.git-organization }}
         is-infra-script: ${{ inputs.is-infra-script }}        
         aws-bucket-prefix: ${{ inputs.aws-bucket-prefix }}
         aws-region: ${{ inputs.aws-region }}
-        shared-app-id: ${{ inputs.fs-shared-app-id }}
-        shared-token: ${{ inputs.fs-shared-token }}
+        shared-client-id: ${{ inputs.shared-client-id }}
+        shared-secret: ${{ inputs.shared-secret }}
         aws-github-role: ${{ inputs.aws-github-role }}
         aws-main-role: ${{ inputs.aws-main-role }}
-        aws-core-role: ${{ inputs.aws-core-role }}
+        aws-admin-role: ${{ inputs.aws-admin-role }}
 
     - name: Terraform Destroy
       working-directory: ./terraform
