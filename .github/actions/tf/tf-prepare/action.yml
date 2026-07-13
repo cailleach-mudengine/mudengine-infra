@@ -90,9 +90,9 @@ runs:
         cat << 'EOF' > .auto.tfvars
           initiative="${{ inputs.initiative }}"
           environment="${{ inputs.environment }}"
-          bucket-prefix="${{ inputs.aws-bucket-prefix}}"
-          git-organization="${{ inputs.git-organization }}"
-          service-name="${{ inputs.service-name}}"
+          bucket_prefix="${{ inputs.aws-bucket-prefix}}"
+          git_organization="${{ inputs.git-organization }}"
+          service_name="${{ inputs.service-name}}"
           revision="${{ inputs.revision }}"
         EOF
 
