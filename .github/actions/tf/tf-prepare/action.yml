@@ -41,6 +41,7 @@ runs:
       uses: aws-actions/configure-aws-credentials@v6.2.2
       with:
         role-to-assume: ${{ inputs.aws-github-role }}
+        role-session-name: 'githubSession'
         aws-region: ${{ inputs.aws-region }}
       
     - name: Setup Terraform with specified version on the runner
