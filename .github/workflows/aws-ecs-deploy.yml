@@ -1,16 +1,16 @@
 name: 'AwsPublish'
 
 on:  
-  workflow_dispatch:
-    inputs:
-      environment:
-        type: string
-        required: true  
   workflow_call:
     inputs:
       environment:
         type: string
-        required: true                
+        required: true
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: string
+        required: true
 
 env:
   aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
