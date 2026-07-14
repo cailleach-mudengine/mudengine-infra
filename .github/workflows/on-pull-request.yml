@@ -11,20 +11,18 @@ permissions:
   pull-requests: write
   id-token: write
 
-env:
-  environment: 'dev'  
-
 jobs:
   starter-ecs-pull-request:
-    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-pull-request.yml@main
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-pull-request.yml@test/pr
     with:
-      environment: ${{ env.environment }}
+      environment: 'dev'
       initiative: ${{ vars.INITIATIVE }}
       aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
-      aws-region: ${{ vars[format('{0}_AWS_REGION', env.environment)] }}
+      aws-region: ${{ vars.DEV_AWS_REGION }}
+      git-organization: ${{ github.repository_owner }}
     secrets:
-      aws-admin-role: ${{ secrets[format('{0}_AWS_ADMIN_ROLE', env.environment)] }}
-      aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', env.environment)] }}
-      aws-main-role: ${{ secrets[format('{0}_AWS_MASTER_ROLE', env.environment)] }}
+      aws-admin-role: ${{ secrets.DEV_AWS_ADMIN_ROLE }}
+      aws-github-role: ${{ secrets.DEV_AWS_GITHUB_ROLE }}
+      aws-main-role: ${{ secrets.DEV_AWS_MASTER_ROLE }}
       shared-client-id: ${{ secrets.SHARED_CLIENT_ID }}
-      shared-secret: ${{ secrets.SHARED_SECRET }}      
+      shared-secret: ${{ secrets.SHARED_SECRET }}

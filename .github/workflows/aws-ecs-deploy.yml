@@ -4,23 +4,28 @@ on:
   workflow_call:
     inputs:
       initiative:
+        type: string
         required: true
       environment:
+        type: string
         required: true
       service-name:
+        type: string
         required: false
       revision:
+        type: string
         required: false
-      is-infra-script:
-        type: boolean
-        required: true  
       git-organization:
+        type: string
         required: true
       aws-bucket-prefix:
+        type: string
         required: true    
       aws-region:
+        type: string
         required: true
         description: Region where to run Terraform script
+    secrets:
       shared-client-id:
         required: true
       shared-secret:
@@ -33,7 +38,7 @@ on:
         description: Role to be used to run Terraform script
       aws-admin-role:
         required: true
-        description: Additional role to access AWS Core Account
+        description: Additional role to access AWS Core Account  
 
 permissions:
   contents: read
@@ -52,14 +57,14 @@ jobs:
       uses: cailleach-devops/aws-shared-actions/.github/actions/tf/tf-apply@tf-actions
       with:
         aws-bucket-prefix: ${{ inputs.aws-bucket-prefix }}
-        aws-admin-role: ${{ inputs.aws-admin-role }}
-        aws-github-role: ${{ inputs.aws-github-role }}
-        aws-main-role: ${{ inputs.aws-main-role }}
+        aws-admin-role: ${{ secrets.aws-admin-role }}
+        aws-github-role: ${{ secrets.aws-github-role }}
+        aws-main-role: ${{ secrets.aws-main-role }}
         aws-region: ${{ inputs.aws-region }}
-        shared-client-id: ${{ inputs.shared-client-id }}
-        shared-secret: ${{ inputs.shared-secret }}
+        shared-client-id: ${{ secrets.shared-client-id }}
+        shared-secret: ${{ secrets.shared-secret }}
         is-infra-script: true
-        initiative: ${{ inputs.initiative }}        
+        initiative: ${{ inputs.initiative }}
         environment: ${{ inputs.environment }}
-        message: "GitHub Push in Main Branch"
+        git-organization: ${{ inputs.git-organization }}
 
