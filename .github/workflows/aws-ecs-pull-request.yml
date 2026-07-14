@@ -27,21 +27,16 @@ on:
         description: Region where to run Terraform script
     secrets:
       shared-client-id:
-        type: string
         required: true
       shared-secret:
-        type: string
         required: true
       aws-github-role:
-        type: string
         required: true
         description: Role to be used to run Terraform script
       aws-main-role:
-        type: string
         required: true
         description: Role to be used to run Terraform script
       aws-admin-role:
-        type: string
         required: true
         description: Additional role to access AWS Core Account        
 
