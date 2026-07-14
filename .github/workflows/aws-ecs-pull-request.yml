@@ -4,34 +4,43 @@ on:
   workflow_call:
     inputs:
       initiative:
+        type: string
         required: true
       environment:
+        type: string
         required: true
       service-name:
+        type: string
         required: false
       revision:
+        type: string
         required: false
-      is-infra-script:
-        type: boolean
-        required: true  
       git-organization:
+        type: string
         required: true
       aws-bucket-prefix:
+        type: string
         required: true    
       aws-region:
+        type: string
         required: true
         description: Region where to run Terraform script
       shared-client-id:
+        type: string
         required: true
       shared-secret:
+        type: string
         required: true
       aws-github-role:
+        type: string
         required: true
         description: Role to be used to run Terraform script
       aws-main-role:
+        type: string
         required: true
         description: Role to be used to run Terraform script
       aws-admin-role:
+        type: string
         required: true
         description: Additional role to access AWS Core Account        
 
