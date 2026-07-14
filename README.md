@@ -40,17 +40,6 @@ and opt-in for a shared database instance.  (You aren't required to create a RDS
 at this moment, that's just for a shared instance).
 
 
-## Create Repository Pipeline
-
-When the repository is created a pipeline is triggered to create a TFC workspace.
-The workspace will have the repository name and the environment as suffix.
-
-The workspace need to be created at an specific terraform project, in order to inherit
-all variables written by bootstrap script.
-
-There's no run or apply operations at this point.  Just workspace creation.
-
-
 ## Pull Request Pipeline
 
 The main reason to have a commented configuration file is to give to user the opportunity
