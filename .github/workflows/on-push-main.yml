@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   starter-ecs-dev-publish:
-    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-deploy.yml@main
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-deploy.yml@test/pr
     with:
       environment: 'dev'
       initiative: ${{ vars.INITIATIVE }}

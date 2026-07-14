@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   starter-ecs-pull-request:
-    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-pull-request.yml@main
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-pull-request.yml@test/pr
     with:
       environment: 'dev'
       initiative: ${{ vars.INITIATIVE }}
