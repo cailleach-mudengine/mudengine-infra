@@ -25,4 +25,4 @@ jobs:
       aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', inputs.environment)] }}
       aws-main-role: ${{ secrets[format('{0}_AWS_MASTER_ROLE', inputs.environment)] }}
       shared-client-id: ${{ secrets.SHARED_CLIENT_ID }}
-      shared-secret: ${{ secrets.SHARED_SECRET }}      
+      shared-secret: ${{ secrets.SHARED_SECRET }}

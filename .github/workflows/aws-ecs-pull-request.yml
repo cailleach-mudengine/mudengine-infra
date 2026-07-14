@@ -25,6 +25,7 @@ on:
         type: string
         required: true
         description: Region where to run Terraform script
+    secrets:
       shared-client-id:
         type: string
         required: true
