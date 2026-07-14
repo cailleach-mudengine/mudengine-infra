@@ -10,20 +10,17 @@ permissions:
   contents: read
   id-token: write
 
-env:
-  environment: 'dev'  
-
 jobs:
   starter-ecs-dev-publish:
     uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-deploy.yml@main
     with:
-      environment: ${{ env.environment }}
+      environment: 'dev'
       initiative: ${{ vars.INITIATIVE }}
       aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
-      aws-region: ${{ vars[format('{0}_AWS_REGION', env.environment)] }}
+      aws-region: ${{ vars[format('{0}_AWS_REGION', inputs.environment)] }}
     secrets:
-      aws-admin-role: ${{ secrets[format('{0}_AWS_ADMIN_ROLE', env.environment)] }}
-      aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', env.environment)] }}
-      aws-main-role: ${{ secrets[format('{0}_AWS_MASTER_ROLE', env.environment)] }}
+      aws-admin-role: ${{ secrets[format('{0}_AWS_ADMIN_ROLE', inputs.environment)] }}
+      aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', inputs.environment)] }}
+      aws-main-role: ${{ secrets[format('{0}_AWS_MASTER_ROLE', inputs.environment)] }}
       shared-client-id: ${{ secrets.SHARED_CLIENT_ID }}
       shared-secret: ${{ secrets.SHARED_SECRET }}      
