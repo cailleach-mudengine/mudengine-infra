@@ -9,9 +9,6 @@ on:
       environment:
         type: string
         required: true
-      git-organization:
-        type: string
-        required: true
       service-name:
         type: string
         required: false
