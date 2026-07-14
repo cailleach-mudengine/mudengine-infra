@@ -55,12 +55,12 @@ jobs:
       uses: cailleach-devops/aws-shared-actions/.github/actions/tf/tf-plan@tf-actions
       with:
         aws-bucket-prefix: ${{ inputs.aws-bucket-prefix }}
-        aws-admin-role: ${{ inputs.aws-admin-role }}
-        aws-github-role: ${{ inputs.aws-github-role }}
-        aws-main-role: ${{ inputs.aws-main-role }}
+        aws-admin-role: ${{ secrets.aws-admin-role }}
+        aws-github-role: ${{ secrets.aws-github-role }}
+        aws-main-role: ${{ secrets.aws-main-role }}
         aws-region: ${{ inputs.aws-region }}
-        shared-client-id: ${{ inputs.shared-client-id }}
-        shared-secret: ${{ inputs.shared-secret }}
+        shared-client-id: ${{ secrets.shared-client-id }}
+        shared-secret: ${{ secrets.shared-secret }}
         is-infra-script: true
         initiative: ${{ inputs.initiative }}
         environment: ${{ inputs.environment }}
