@@ -9,7 +9,16 @@ permissions:
 
 jobs:
   starter-ecs-dev-publish:
-    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-destroy.yml@tf-actions
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-destroy.yml@test/pr
     with:
-      environment: "dev"
-    secrets: inherit
+      environment: 'dev'
+      initiative: ${{ vars.INITIATIVE }}
+      aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
+      aws-region: ${{ vars.DEV_AWS_REGION }}
+      git-organization: ${{ github.repository_owner }}
+    secrets:
+      aws-admin-role: ${{ secrets.DEV_AWS_ADMIN_ROLE }}
+      aws-github-role: ${{ secrets.DEV_AWS_GITHUB_ROLE }}
+      aws-main-role: ${{ secrets.DEV_AWS_MASTER_ROLE }}
+      shared-client-id: ${{ secrets.SHARED_CLIENT_ID }}
+      shared-secret: ${{ secrets.SHARED_SECRET }}
