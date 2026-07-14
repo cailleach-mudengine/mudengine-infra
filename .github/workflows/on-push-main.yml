@@ -18,6 +18,7 @@ jobs:
       initiative: ${{ vars.INITIATIVE }}
       aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
       aws-region: ${{ vars[format('{0}_AWS_REGION', inputs.environment)] }}
+      git-organization: ${{ github.repository_owner }}
     secrets:
       aws-admin-role: ${{ secrets[format('{0}_AWS_ADMIN_ROLE', inputs.environment)] }}
       aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', inputs.environment)] }}

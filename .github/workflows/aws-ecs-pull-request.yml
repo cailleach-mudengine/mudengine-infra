@@ -9,6 +9,9 @@ on:
       environment:
         type: string
         required: true
+      git-organization:
+        type: string
+        required: true
       service-name:
         type: string
         required: false
@@ -66,6 +69,7 @@ jobs:
         shared-client-id: ${{ inputs.shared-client-id }}
         shared-secret: ${{ inputs.shared-secret }}
         is-infra-script: true
-        initiative: ${{ inputs.initiative }}        
+        initiative: ${{ inputs.initiative }}
         environment: ${{ inputs.environment }}
+        git-organization: ${{ inputs.git-organization }}
         
