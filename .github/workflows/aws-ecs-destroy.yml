@@ -1,0 +1,65 @@
+name: 'AwsDestroy'
+
+on:  
+  workflow_call:
+    inputs:
+      initiative:
+        required: true
+      environment:
+        required: true
+      service-name:
+        required: false
+      revision:
+        required: false
+      is-infra-script:
+        type: boolean
+        required: true  
+      git-organization:
+        required: true
+      aws-bucket-prefix:
+        required: true    
+      aws-region:
+        required: true
+        description: Region where to run Terraform script
+      shared-client-id:
+        required: true
+      shared-secret:
+        required: true
+      aws-github-role:
+        required: true
+        description: Role to be used to run Terraform script
+      aws-main-role:
+        required: true
+        description: Role to be used to run Terraform script
+      aws-admin-role:
+        required: true
+        description: Additional role to access AWS Core Account
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  
+  terraform-destroy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - id: checkout
+      name: checkout
+      uses: actions/checkout@v7
+      
+    - name: "Terraform Destroy"
+      uses: cailleach-devops/aws-shared-actions/.github/actions/tf/tf-destroy@tf-actions
+      with:
+        aws-bucket-prefix: ${{ inputs.aws-bucket-prefix }}
+        aws-admin-role: ${{ inputs.aws-admin-role }}
+        aws-github-role: ${{ inputs.aws-github-role }}
+        aws-main-role: ${{ inputs.aws-main-role }}
+        aws-region: ${{ inputs.aws-region }}
+        shared-client-id: ${{ inputs.shared-client-id }}
+        shared-secret: ${{ inputs.shared-secret }}
+        is-infra-script: true
+        initiative: ${{ inputs.initiative }}        
+        environment: ${{ inputs.environment }}
+        message: "GitHub Push in Main Branch"

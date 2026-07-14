@@ -1,6 +1,7 @@
 name: 'OnPushMain'
 
 on:  
+  workflow_dispatch:
   push:
     branches:
       - 'main'
@@ -9,9 +10,20 @@ permissions:
   contents: read
   id-token: write
 
+env:
+  environment: 'dev'  
+
 jobs:
   starter-ecs-dev-publish:
-    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-deploy.yml@tf-actions
+    uses: cailleach-mudengine/mudengine-infra/.github/workflows/aws-ecs-deploy.yml@main
     with:
-      environment: "dev"
-    secrets: inherit
+      environment: ${{ env.environment }}
+      initiative: ${{ vars.INITIATIVE }}
+      aws-bucket-prefix: ${{ vars.BUCKET_PREFIX }}
+      aws-region: ${{ vars[format('{0}_AWS_REGION', env.environment)] }}
+    secrets:
+      aws-admin-role: ${{ secrets[format('{0}_AWS_ADMIN_ROLE', env.environment)] }}
+      aws-github-role: ${{ secrets[format('{0}_AWS_GITHUB_ROLE', env.environment)] }}
+      aws-main-role: ${{ secrets[format('{0}_AWS_MASTER_ROLE', env.environment)] }}
+      shared-client-id: ${{ secrets.SHARED_CLIENT_ID }}
+      shared-secret: ${{ secrets.SHARED_SECRET }}      
