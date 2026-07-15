@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   starter-ecs-dev-publish:
-    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-deploy.yml@tf-actions
+    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-deploy.yml@main
     with:
       environment: 'dev'
       initiative: ${{ vars.INITIATIVE }}

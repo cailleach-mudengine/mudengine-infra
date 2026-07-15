@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   starter-ecs-dev-publish:
-    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-destroy.yml@tf-actions
+    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-destroy.yml@main
     with:
       environment: 'dev'
       initiative: ${{ vars.INITIATIVE }}

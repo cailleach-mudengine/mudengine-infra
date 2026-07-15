@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   starter-ecs-pull-request:
-    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-pull-request.yml@tf-actions
+    uses: cailleach-devops/aws-shared-actions/.github/workflows/aws-ecs-pull-request.yml@main
     with:
       environment: 'dev'
       initiative: ${{ vars.INITIATIVE }}
