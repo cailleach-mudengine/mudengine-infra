@@ -39,8 +39,6 @@ In the configuration file you can customize details about ECS cluster creation
 and opt-in for a shared database instance.  (You aren't required to create a RDS instance
 at this moment, that's just for a shared instance).
 
-
-
 ## Pull Request Pipeline
 
 The main reason to have a commented configuration file is to give to user the opportunity
